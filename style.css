@@ -1,0 +1,273 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Calibri', sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  height: 100vh;
+  display: flex;
+}
+
+.app {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* SIDEBAR (Desktop default visible) */
+.sidebar {
+  width: 240px;
+  background: #ffffff;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-right: none;
+  transition: transform 0.3s ease;
+}
+
+/* Hide only when explicitly toggled on mobile */
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.sidebar-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#page-list {
+  flex-grow: 1;
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+#page-list li {
+  padding: 0.6rem;
+  margin-bottom: 0.4rem;
+  background: #f7f7f7;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#page-list li:hover {
+  background: #f0f0f0;
+}
+
+#page-list li.active {
+  background: #e0edff;
+}
+
+#new-page {
+  background: #f7f7f7;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#new-page:hover {
+  background: #f0f0f0;
+}
+
+/* EDITOR */
+.editor {
+  flex-grow: 1;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+#show-sidebar {
+  background: none;
+  border: none;
+  display: none;
+  cursor: pointer;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.toolbar button, .toolbar select {
+  border: none;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbar button:hover {
+  background: #f9fafb;
+}
+
+.toolbar select {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.5rem;
+}
+
+/* TITLE + CONTENT */
+#note-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0.8rem 0;
+   border: none;
+  outline: none;
+  background: none;
+  text-align: center;
+  display: block;
+  width: 100%; /* important: lets text-align work properly */
+}
+
+.content-area {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  min-height: 400px;
+  overflow-y: auto;
+  font-size: 1rem;
+}
+
+/* Universal Lucide Icon Styling */
+svg.lucide {
+  width: 16px !important;
+  height: 16px !important;
+  stroke-width: 2.2 !important;
+  vertical-align: middle;
+  flex-shrink: 0;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+   .sidebar {
+    position: absolute;
+    z-index: 100;
+    height: 100%;
+    transform: translateX(-100%);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Show only on mobile toggle */
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  #show-sidebar {
+    display: inline-flex;
+  }
+
+  .editor {
+    padding: 1rem;
+  }
+
+  .toolbar {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================
+   🔔 Toast message styling
+   ========================================================== */
+#toast {
+  visibility: hidden;
+  min-width: 140px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s, bottom 0.3s;
+}
+
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+/* ==========================================================
+   🌟 Main Topbar Brand Button
+   ========================================================== */
+#show-sidebar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: none;
+  background: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+
+
+#show-sidebar:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+#show-sidebar .icon {
+  font-size: 0.8rem; /* slightly larger symbol */
+  line-height: 1;
+}
+
+
+/* ==========================================================
+   🧩 Shared App Title Style — same for sidebar + topbar
+   ========================================================== */
+.app-title {
+  font-family: 'Calibri', sans-serif;
+  font-size: 1.5rem;       /* same as #note-title */
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #333;
+  line-height: 1;
+}

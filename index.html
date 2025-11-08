@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotesTab</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>NotesTab</h2>
+        <button id="hide-sidebar" title="Hide Sidebar">
+          <i data-lucide="arrow-left-from-line"></i>
+        </button>
+      </div>
+      <ul id="page-list"></ul>
+      <button id="new-page">
+        <i data-lucide="plus"></i> Create new list
+      </button>
+    </aside>
+
+    <!-- Main Editor -->
+    <main class="editor">
+      <div class="topbar">
+        <button id="show-sidebar" title="Show Sidebar">
+    <span class="app-title">NotesTab</span>
+    <span class="icon">&rsaquo;</span>
+    </button>
+
+        <div class="toolbar">
+          <select id="font-family">
+            <option value="'Calibri', sans-serif">Calibri</option>
+            <option value="'Poppins', sans-serif">Poppins</option>
+          </select>
+          <select id="font-size">
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="18">18</option>
+            <option value="24">24</option>
+          </select>
+          <button onclick="format('bold')"><b>B</b></button>
+          <button onclick="format('italic')"><i>I</i></button>
+          <button onclick="format('underline')"><u>U</u></button>
+          <button onclick="insertLink()" title="Insert Link"><i data-lucide="link-2"></i></button>
+          <button onclick="format('justifyLeft')" title="Align Left"><i data-lucide="align-left"></i></button>
+          <button onclick="format('justifyCenter')" title="Align Center"><i data-lucide="align-center"></i></button>
+          <button onclick="format('justifyRight')" title="Align Right"><i data-lucide="align-right"></i></button>
+        </div>
+      </div>
+
+      <input id="note-title" placeholder="Title" />
+      <div id="note-content" contenteditable="true" class="content-area">Start writing here...</div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
