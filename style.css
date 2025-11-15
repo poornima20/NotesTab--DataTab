@@ -8,7 +8,7 @@ body {
   font-family: 'Calibri', sans-serif;
   background-color: #ffffff;
   color: #333;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
 }
 
@@ -21,6 +21,7 @@ body {
 /* SIDEBAR (Desktop default visible) */
 .sidebar {
   width: 240px;
+  flex-shrink: 0;
   background: #ffffff;
   padding: 1rem;
   display: flex;
@@ -70,6 +71,17 @@ body {
   background: #e0edff;
 }
 
+@keyframes highlightPulse {
+  from {
+    transform: scale(0.97);
+    background-color: #d4e6ff;
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+
 #new-page {
   background: #f7f7f7;
   border: none;
@@ -88,7 +100,9 @@ body {
 /* EDITOR */
 .editor {
   flex-grow: 1;
+  flex-shrink: 1;
   padding: 1rem 2rem;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -152,15 +166,20 @@ body {
 }
 
 .content-area {
-  flex-grow: 1;
   border: none;
   outline: none;
   background: #ffffff;
   padding: 1rem;
   border-radius: 8px;
   min-height: 400px;
-  overflow-y: auto;
   font-size: 1rem;
+  overflow: visible;   /* let height expand */
+  height: auto;        /* allow natural growth */
+  flex-grow: 0;        /* stop forcing it to fill fixed height */
+  resize: vertical;   /* allow user to resize vertically */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%; /* keeps content responsive */
 }
 
 /* Universal Lucide Icon Styling */

@@ -69,23 +69,46 @@ function loadPages() {
   if (window.lucide && typeof lucide.createIcons === 'function') {
     lucide.createIcons();
   }
+
 }
 
 function switchPage(i) {
   activePage = i;
+  localStorage.setItem("notesTabActivePage", i);
+
   const p = pages[i];
   noteTitle.value = p.title;
   noteContent.innerHTML = p.content;
   loadPages();
+
+  // Add short delay to trigger CSS animation again
+setTimeout(() => {
+  const activeItem = pageList.children[i];
+  if (activeItem) {
+    activeItem.classList.add("active");
+  }
+}, 10);
 }
 
 newPageBtn.onclick = () => {
-  pages.push({ title: 'Untitled', content: '' });
+  // Prevent duplicate untitled notes
+  const baseTitle = "Untitled";
+  let title = baseTitle;
+  let counter = 1;
+
+  while (pages.some(p => p.title === title)) {
+    title = `${baseTitle} ${counter++}`;
+  }
+
+  pages.push({ title, content: '' });
+
+  // Auto-select the newest page
   activePage = pages.length - 1;
   savePages();
   loadPages();
   switchPage(activePage);
 };
+
 
 function savePages() {
   localStorage.setItem('notesTabPages', JSON.stringify(pages));
@@ -93,7 +116,10 @@ function savePages() {
 
 noteTitle.oninput = noteContent.oninput = () => {
   if (activePage !== null) {
-    pages[activePage].title = noteTitle.value;
+    let newTitle = noteTitle.value.trim();
+    if (newTitle === "") newTitle = "Untitled";
+    pages[activePage].title = newTitle;
+
     pages[activePage].content = noteContent.innerHTML;
     savePages();
     loadPages();
@@ -211,12 +237,39 @@ window.addEventListener('keydown', (e) => {
 });
 
 /* ------------------------------
+   Close sidebar on outside click (mobile only)
+   ------------------------------ */
+document.addEventListener('click', (e) => {
+  if (!isMobileWidth()) return; // only mobile
+  if (!sidebar.classList.contains('show')) return; // only when sidebar is open
+
+  const clickInsideSidebar = sidebar.contains(e.target);
+  const clickedShowButton = showSidebarBtn.contains(e.target);
+
+  // If clicked outside both sidebar and the "open" button → close it
+  if (!clickInsideSidebar && !clickedShowButton) {
+    sidebar.classList.remove('show');
+  }
+});
+
+
+/* ------------------------------
    Initialization
    ------------------------------ */
 function init() {
   // initial pages load
   loadPages();
-  if (pages.length) switchPage(0);
+  if (pages.length) {
+  const savedIndex = parseInt(localStorage.getItem("notesTabActivePage"));
+  if (!isNaN(savedIndex) && savedIndex < pages.length) {
+    activePage = savedIndex;
+    switchPage(savedIndex);
+  } else {
+    activePage = 0;
+    switchPage(0);
+  }
+}
+
 
   // initial sidebar state
   // ensure showSidebarBtn exists (fail-safe)
