@@ -15,8 +15,9 @@ body {
 .app {
   display: flex;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;  /* allow sidebar and content to grow */
 }
+
 
 /* SIDEBAR (Desktop default visible) */
 .sidebar {
@@ -28,6 +29,10 @@ body {
   flex-direction: column;
   border-right: none;
   transition: transform 0.3s ease;
+  height: 100vh;  
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
 }
 
 /* Hide only when explicitly toggled on mobile */
@@ -115,7 +120,14 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 1rem;
+
+  position: sticky;   /* ⭐ stay visible even on scroll */
+  top: 0;             /* stick to the top */
+  z-index: 50;        /* stay above content */
+  background: #ffffff; /* white strip */
+  padding: 0.8rem 0;   /* optional: adds breathing room */
 }
+
 
 #show-sidebar {
   background: none;
@@ -196,17 +208,18 @@ svg.lucide {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-   .sidebar {
-    position: absolute;
-    z-index: 100;
-    height: 100%;
-    transform: translateX(-100%);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  .sidebar {
+    height: 100%;         /* full height inside mobile layout */
+    position: fixed;      /* fixed for slide-in */
+    top: 0;
+    left: 0;
+    overflow-y: auto;     /* allow scrolling in mobile */
+    transform: translateX(-100%); /* hidden by default */
+     z-index: 2000;   /* higher than topbar (50) */
   }
 
-  /* Show only on mobile toggle */
   .sidebar.show {
-    transform: translateX(0);
+    transform: translateX(0); /* slide in */
   }
 
   #show-sidebar {

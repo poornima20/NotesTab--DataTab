@@ -31,25 +31,40 @@
     <span class="icon">&rsaquo;</span>
     </button>
 
-        <div class="toolbar">
-          <select id="font-family">
-            <option value="'Calibri', sans-serif">Calibri</option>
-            <option value="'Poppins', sans-serif">Poppins</option>
-          </select>
-          <select id="font-size">
-            <option value="12">12</option>
-            <option value="14">14</option>
-            <option value="18">18</option>
-            <option value="24">24</option>
-          </select>
-          <button onclick="format('bold')"><b>B</b></button>
-          <button onclick="format('italic')"><i>I</i></button>
-          <button onclick="format('underline')"><u>U</u></button>
-          <button onclick="insertLink()" title="Insert Link"><i data-lucide="link-2"></i></button>
-          <button onclick="format('justifyLeft')" title="Align Left"><i data-lucide="align-left"></i></button>
-          <button onclick="format('justifyCenter')" title="Align Center"><i data-lucide="align-center"></i></button>
-          <button onclick="format('justifyRight')" title="Align Right"><i data-lucide="align-right"></i></button>
-        </div>
+<div class="toolbar">
+  <select id="font-family">
+    <option value="'Calibri', sans-serif">Calibri</option>
+    <option value="'Poppins', sans-serif">Poppins</option>
+  </select>
+
+  <select id="font-size">
+    <option value="12">12</option>
+    <option value="14">14</option>
+    <option value="18">18</option>
+    <option value="24">24</option>
+  </select>
+
+  <!-- Basic formatting -->
+  <button onclick="format('bold')" title="Bold"><i data-lucide="bold"></i></button>
+        <button onclick="format('italic')" title="Italic"><i data-lucide="italic"></i></button>
+        <button onclick="format('underline')" title="Underline"><i data-lucide="underline"></i></button>
+
+        <!-- Undo / Redo -->
+        <button onclick="format('undo')" title="Undo"><i data-lucide="undo"></i></button>
+        <button onclick="format('redo')" title="Redo"><i data-lucide="redo"></i></button>
+
+        <!-- Lists -->
+        <button onclick="format('insertUnorderedList')" title="Bullet List"><i data-lucide="list"></i></button>
+        <button onclick="format('insertOrderedList')" title="Numbered List"><i data-lucide="list-ordered"></i></button>
+
+        <!-- Links -->
+        <button onclick="insertLink()" title="Insert Link"><i data-lucide="link-2"></i></button>
+
+        <!-- Alignment -->
+        <button onclick="format('justifyLeft')" title="Align Left"><i data-lucide="align-left"></i></button>
+        <button onclick="format('justifyCenter')" title="Align Center"><i data-lucide="align-center"></i></button>
+        <button onclick="format('justifyRight')" title="Align Right"><i data-lucide="align-right"></i></button>
+        <button onclick="format('justifyFull')" title="Justify"><i data-lucide="align-justify"></i></button>
       </div>
 
       <input id="note-title" placeholder="Title" />
